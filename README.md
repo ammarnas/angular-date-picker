@@ -1,27 +1,125 @@
-# DatePicker
+# Angular Date Picker Component
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+A customizable date picker component for Angular applications with a clean, modern design and intuitive user experience.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Customizable Date Format**: Choose your preferred date format (e.g., DD/MM/YYYY, MM/DD/YYYY)
+- **Min/Max Date Range**: Restrict date selection to a specific range
+- **Custom Placeholder**: Set your own placeholder text
+- **Auto-Close Option**: Control whether the calendar closes automatically after date selection
+- **Year Navigation**: Easily navigate between years with a dedicated year selector
+- **Responsive Design**: Works well on both desktop and mobile devices
+- **Accessibility**: Built with accessibility in mind
+- **No External Dependencies**: Lightweight and self-contained
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/angular-date-picker.git
 
-## Build
+# Navigate to the project directory
+cd angular-date-picker
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# Install dependencies
+npm install
 
-## Running unit tests
+# Start the development server
+ng serve
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Usage
 
-## Running end-to-end tests
+### Basic Usage
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```html
+<app-date-picker (dateChange)="onDateChange($event)"></app-date-picker>
+```
 
-## Further help
+### With Custom Format
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```html
+<app-date-picker 
+  [format]="'MM/DD/YYYY'" 
+  (dateChange)="onDateChange($event)">
+</app-date-picker>
+```
+
+### With Min/Max Date Range
+
+```html
+<app-date-picker 
+  [minDate]="minDate" 
+  [maxDate]="maxDate" 
+  (dateChange)="onDateChange($event)">
+</app-date-picker>
+```
+
+### With Custom Placeholder
+
+```html
+<app-date-picker 
+  [placeholder]="'Choose a date...'" 
+  (dateChange)="onDateChange($event)">
+</app-date-picker>
+```
+
+### With Auto-Close Disabled
+
+```html
+<app-date-picker 
+  [autoClose]="false" 
+  (dateChange)="onDateChange($event)">
+</app-date-picker>
+```
+
+### With Year Navigation
+
+```html
+<app-date-picker 
+  [minDate]="minYearDate" 
+  [maxDate]="maxYearDate" 
+  (dateChange)="onDateChange($event)">
+</app-date-picker>
+```
+
+**Tip:** Click on the month/year in the calendar header to open the year selector for quick navigation between years.
+
+## Component API
+
+### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `format` | string | 'DD/MM/YYYY' | The format to display the date |
+| `minDate` | Date \| null | null | The minimum selectable date |
+| `maxDate` | Date \| null | null | The maximum selectable date |
+| `placeholder` | string | 'Select date' | The placeholder text for the input |
+| `autoClose` | boolean | true | Whether to close the calendar after date selection |
+
+### Outputs
+
+| Output | Type | Description |
+|--------|------|-------------|
+| `dateChange` | EventEmitter<Date \| null> | Emits when the selected date changes |
+
+## Styling
+
+The component uses SCSS for styling and is designed to be easily customizable. You can override the default styles by targeting the component's CSS classes in your application's styles.
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- IE11 (with polyfills)
+
+## License
+
+MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

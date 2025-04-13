@@ -1,0 +1,104 @@
+<div class="date-picker-container" #datePicker>
+  <div class="date-picker-input">
+    <input
+      type="text"
+      [mask]="mask"
+      [(ngModel)]="displayDate"
+      (input)="onInputChange($event)"
+      [placeholder]="placeholder"
+      class="date-input"
+    />
+    <div class="date-picker-actions">
+      <button
+        *ngIf="displayDate"
+        class="clear-button"
+        (click)="clearDate()"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <button
+        class="calendar-button"
+        (click)="toggleCalendar()"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="calendar-container" #calendar *ngIf="isOpen">
+    <div class="calendar-header">
+      <button class="nav-button" (click)="previousMonth()" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <span class="current-month" (click)="toggleYearSelector()">
+        {{ currentMonth | date:'MMMM yyyy' }}
+      </span>
+      <button class="nav-button" (click)="nextMonth()" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+      <button class="close-button" (click)="closeCalendar()" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Year Selector -->
+    <div class="year-selector" *ngIf="showYearSelector">
+      <div class="year-navigation">
+        <button class="nav-button" (click)="previousYear()" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <span class="current-year">{{ currentYear }}</span>
+        <button class="nav-button" (click)="nextYear()" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="year-grid">
+        <button
+          *ngFor="let year of yearRange"
+          class="year-button"
+          [class.selected]="year === currentMonth.getFullYear()"
+          (click)="selectYear(year)"
+        >
+          {{ year }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="calendar-grid" *ngIf="!showYearSelector">
+      <div class="weekday" *ngFor="let day of weekDays">{{ day }}</div>
+      <div
+        *ngFor="let date of calendarDays"
+        class="calendar-day"
+        [class.other-month]="date.getMonth() !== currentMonth.getMonth()"
+        [class.today]="isToday(date)"
+        [class.selected]="isSelected(date)"
+        [class.disabled]="!isDateInRange(date)"
+        (click)="selectDate(date)"
+      >
+        {{ date.getDate() }}
+      </div>
+    </div>
+  </div>
+</div>
